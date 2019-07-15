@@ -1,7 +1,8 @@
 SOURCES := $(wildcard *.c)
 BINARIES := $(SOURCES:%.c=%)
 
-all: $(BINARIES)
+all: $(BINARIES) 
+	make -C pwntest
 
 #%: %.c shellcode
 	#gcc -fno-stack-protector -z execstack $< -o $@
@@ -55,4 +56,4 @@ bof9:
 
 clean:
 	rm -f $(BINARIES) *.o a.out hello *.hex *.txt
-	make clean -C shellcode
+	make clean -C pwntest
