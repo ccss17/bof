@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#define BUF_SIZE 1
+#define BUF_SIZE 8
 
 // COMPILE $ gcc -fno-stack-protector bof9.c -o bof9
 // SETUID  $ sudo chown root:root bof9
 //         $ sudo chmod 4755 bof9
 // EXPLOIT $ 
+
+char * binsh = "/bin/sh";
 
 void vuln(char * arg) {
     char buf[BUF_SIZE];
@@ -20,7 +22,7 @@ void vuln(char * arg) {
     strcpy(buf, arg);
     printf("Hello %s[%p]!\n", buf, buf);
     printf("(func:SYSTEM -> %p)\n", system);
-    printf("(func:binsh -> %p)\n", getenv("binsh"));
+    printf("(string:binsh -> %p)\n", binsh);
 }
 
 int main(int argc, char *argv[]) {

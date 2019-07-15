@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#define BUF_SIZE 1
+#define BUF_SIZE 8
 
 // COMPILE $ gcc -z execstack -fno-stack-protector bof8.c -o bof8
 // SETUID  $ sudo chown root:root bof8
