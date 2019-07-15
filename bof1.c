@@ -9,7 +9,7 @@
 //         $ sudo chmod 4755 bof1
 // EXPLOIT $ (python -c "print('a'*144)";cat) | ./bof1
 
-int main(){
+void vuln() {
     int innocent;
     char buf[BUF_SIZE];
 
@@ -24,5 +24,9 @@ int main(){
         }
         system("/bin/sh");
     }
+}
+
+int main(){
+    vuln();
     return 0;
 }

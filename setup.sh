@@ -14,11 +14,13 @@ deluser(){
 
 case "$1" in
 --remove-all)
+    make clean
     for i in {0..9};do
         deluser bof$i
     done
     ;;
---create)
+*)
+    make
     sudo cp pass /usr/local/bin/
     for i in {0..9}; do
         createuser bof$i

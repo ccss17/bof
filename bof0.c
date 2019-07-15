@@ -5,10 +5,14 @@
 
 // COMPILE $ gcc bof0.c -o bof0
 
-int main(){
+void vuln() {
     char buf[BUF_SIZE];
     puts("\033[32m" "enter your name :)" "\033[0m");
     gets(buf);
     printf("Hello " "\033[33m" "%s" "\033[0m" "!\n", buf);
+}
+
+int main(){
+    vuln();
     return 0;
 }

