@@ -1,13 +1,15 @@
 #!/bin/bash
 
 createuser() {
-    sudo useradd -m -d /home/$1 -s $(which bash) $1
-    echo "$1:$1" | sudo chpasswd
-    sudo cp $1 $1.c /home/$1/
-    sudo cp _deploy_gdbinit /home/$1/.gdbinit
-    sudo cp _deploy_tmux.conf /home/$1/.tmux.conf
-    sudo chown root:root /home/$1/$1
-    sudo chmod 4755 /home/$1/$1
+    sudo useradd -m -d /home/bof$1 -s $(which bash) bof$1
+    echo "bof$1:bof$1" | sudo chpasswd
+    sudo cp bof$1 bof$1.c /home/bof$1/
+    sudo chown bof$(($1+1)):bof$1 /home/bof$1/bof$1
+    sudo chmod 4550 /home/bof$1/bof$1
+    sudo chown root:root /home/bof$1/bof$1.c
+    sudo chmod 644 /home/bof$1/bof$1.c
+    sudo cp _deploy_gdbinit /home/bof$1/.gdbinit
+    sudo cp _deploy_tmux.conf /home/bof$1/.tmux.conf
 }
 
 deluser(){
@@ -26,7 +28,7 @@ case "$1" in
     make
     sudo cp pass /usr/local/bin/
     for i in {0..9}; do
-        createuser bof$i
+        createuser $i
     done
 ;;
 esac
