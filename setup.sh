@@ -4,8 +4,8 @@ createuser() {
     sudo useradd -m -d /home/bof$1 -s $(which bash) bof$1
     echo "bof$1:bof$1" | sudo chpasswd
     sudo cp bof$1 bof$1.c /home/bof$1/
-    sudo chown bof$(($1+1)):bof$1 /home/bof$1/bof$1
-    sudo chmod 4550 /home/bof$1/bof$1
+    sudo chown root:root /home/bof$1/bof$1
+    sudo chmod 4755 /home/bof$1/bof$1
     sudo chown root:root /home/bof$1/bof$1.c
     sudo chmod 644 /home/bof$1/bof$1.c
     sudo cp _deploy_gdbinit /home/bof$1/.gdbinit
