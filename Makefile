@@ -48,6 +48,12 @@ bof9:
 	gcc -fno-stack-protector $@.c -o $@
 	sudo chown root:root $@
 	sudo chmod 4755 $@
+
+bof10:
+	sudo apt-get install gcc-multilib
+	gcc -m32 -z execstack -fno-stack-protector $@.c -o $@
+	sudo chown root:root $@
+	sudo chmod 4755 $@
 clean:
 	rm -f $(BINARIES) *.o a.out hello *.hex *.txt
 	make clean -C pwntest
