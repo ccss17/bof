@@ -15,8 +15,8 @@ void vuln(char * arg) {
     char buf[BUF_SIZE];
 
     if (setuid(0)) {
-    ¦   perror("setuid");
-    ¦   return 1;
+        perror("setuid");
+        return 1;
     }
     strcpy(buf, arg);
     printf("Hello %s[%p]!\n", buf, buf);
