@@ -46,24 +46,18 @@
 
 char * binsh = "/bin/sh";
 
-void vuln(char * arg) {
+void vuln(void) {
     char buf[BUF_SIZE];
 
     if (setuid(0)) {
         perror("setuid");
         return 1;
     }
-    strcpy(buf, arg);
-    printf("Hello %s[%p]!\n", buf, buf);
-    printf("(func:SYSTEM -> %p)\n", system);
-    printf("(string:binsh -> %p)\n", binsh);
+    gets(buf);
+    printf("Hello %s!\n", buf);
 }
 
-int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        fputs("\033[31m" "error :( this program needs some arguments\n" "\033[0m", stderr);
-        return 1;
-    }
-    vuln(argv[1]);
+int main(void) {
+    vuln();
     return 0;
 }
