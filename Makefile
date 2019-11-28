@@ -10,8 +10,6 @@ all: $(BINARIES)
 	#gcc -fno-stack-protector -z execstack $< -o $@
 	#sudo chown root:root $@
 	#sudo chmod 4755 $@
-bof0:
-	gcc -fno-stack-protector $@.c -o $@
 bof1:
 	gcc -fno-stack-protector $@.c -o $@
 bof2:

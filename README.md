@@ -1,9 +1,17 @@
 # bof
 
-## 권한 설정 메모
+## Permission settings
 
-attackme -r-sr-x--- / pwn / current
+- `bof` : `-r-sr-x---` / **pwn** / **user**
 
-src.c -rw-r--r-- / root / root
+- `bof.c` : `-rw-r--r--` / **root** / **root**
 
-flag -r--r----- / root / pwn
+- `flag` : `-r--r-----` / **root** / **pwn**
+
+## Setup BOF CTF
+
+```shell
+git clone https://github.com/ccss17/bof
+cd bof
+./setup.sh
+```

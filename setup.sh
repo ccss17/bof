@@ -8,8 +8,6 @@ createuser() {
     sudo chmod 4755 /home/bof$1/bof$1
     sudo chown root:root /home/bof$1/bof$1.c
     sudo chmod 644 /home/bof$1/bof$1.c
-    sudo cp _deploy_gdbinit /home/bof$1/.gdbinit
-    sudo cp _deploy_tmux.conf /home/bof$1/.tmux.conf
 }
 
 deluser(){
@@ -18,7 +16,7 @@ deluser(){
 }
 
 case "$1" in
---remove-all)
+--remove)
     make clean
     for i in {0..11};do
         deluser bof$i

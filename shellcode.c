@@ -1,6 +1,6 @@
 /*
- * Execute /bin/sh - 27 bytes
- * Dad` <3 baboon
+Execute /bin/sh - 27 bytes
+ Dad` <3 baboon
 ;rdi            0x4005c4 0x4005c4
 ;rsi            0x7fffffffdf40   0x7fffffffdf40
 ;rdx            0x0      0x0

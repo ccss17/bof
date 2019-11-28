@@ -5,10 +5,11 @@
 #include <dlfcn.h>
 #define BUF_SIZE 8
 
+// ASLR ON
 // COMPILE $ gcc -fno-stack-protector bof11.c -o bof11
 // SETUID  $ sudo chown root:root bof11
 //         $ sudo chmod 4755 bof11
-// EXPLOIT --> exp.py
+// EXPLOIT --> exp_bof11.py
 
 void vuln(void) {
     char buf[BUF_SIZE];

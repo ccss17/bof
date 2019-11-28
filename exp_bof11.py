@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 from pwn import *
   
 p = process('./bof11')
