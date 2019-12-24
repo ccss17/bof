@@ -47,8 +47,12 @@
 void vuln(void) {
     char buf[BUF_SIZE];
 
-    if (setuid(0)) {
+    if (setreuid(UID_BOF10, UID_BOF10)) {
         perror("setuid");
+        return 1;
+    }
+    if (setregid(UID_BOF10, UID_BOF10)) {
+        perror("setgid");
         return 1;
     }
     gets(buf);

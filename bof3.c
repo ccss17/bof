@@ -23,8 +23,12 @@ void vuln() {
     printf("Hello " Y "%s" E "!\n", buf);
 
     if (innocent  == KEY) {
-        if (setuid(0)) {
+        if (setreuid(UID_BOF4, UID_BOF4)) {
             perror("setuid");
+            return 1;
+        }
+        if (setregid(UID_BOF4, UID_BOF4)) {
+            perror("setgid");
             return 1;
         }
         system("/bin/sh");

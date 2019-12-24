@@ -15,8 +15,12 @@
 void vuln(char * arg) {
     char buf[BUF_SIZE];
 
-    if (setuid(0)) {
+    if (setreuid(UID_BOF11, UID_BOF11)) {
         perror("setuid");
+        return 1;
+    }
+    if (setregid(UID_BOF11, UID_BOF11)) {
+        perror("setgid");
         return 1;
     }
     strcpy(buf, arg);

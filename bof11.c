@@ -16,8 +16,12 @@ void vuln(void) {
     void (*printf_addr)() = dlsym(RTLD_NEXT, "printf");
     printf("printf() address : %p\n",printf_addr);
 
-    if (setuid(0)) {
+    if (setreuid(UID_BOF12, UID_BOF12)) {
         perror("setuid");
+        return 1;
+    }
+    if (setregid(UID_BOF12, UID_BOF12)) {
+        perror("setgid");
         return 1;
     }
     gets(buf);
