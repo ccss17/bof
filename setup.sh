@@ -24,6 +24,10 @@ C=\"\e[1;36m\"
 E=\"\e[0m\"
 echo -e \$R \"Congratulations!\"
 echo -e \$C \"You solved all BOF CTFs.\" \$E
+function pause(){
+    read -p \"\$*\"
+}
+pause 'Press [Enter] to exit...'
 exit" | sudo tee /home/$USER/.bashrc
     fi
 }
