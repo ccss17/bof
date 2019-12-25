@@ -1,13 +1,5 @@
 # bof
 
-## Permission settings
-
-- `bof` : `-r-sr-x---` / **pwn** / **user**
-
-- `bof.c` : `-rw-r--r--` / **root** / **root**
-
-- `flag` : `-r--r-----` / **root** / **pwn**
-
 ## Setup BOF CTF
 
 ```shell

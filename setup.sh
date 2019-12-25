@@ -1,9 +1,11 @@
 #!/bin/bash
 
 FINAL_STAGE=12
+FIRST_PASSWORD="bof1"
 
 setting_ctf() {
     USER="bof$1"
+    # set password
     echo "$USER:$2" | sudo chpasswd
     if [[ $1 != $FINAL_STAGE ]]; then
         PWN="bof$(($1 + 1))"
@@ -11,7 +13,6 @@ setting_ctf() {
         SRC="/home/$USER/$USER.c"
         sudo cp _$USER /home/$USER/$USER
         sudo cp _$USER.c /home/$USER/$USER.c
-        #sudo chown $PWN:$USER $BIN
         sudo chown $PWN:$PWN $BIN
         sudo chmod 6555 $BIN
         sudo chown root:root $SRC
@@ -28,10 +29,11 @@ exit" | sudo tee /home/$USER/.bashrc
 
 cleanup(){
     make clean
+    rm passwords
     for ((i=1; i<=$FINAL_STAGE; i++)); do
         sudo userdel bof$i
         sudo rm -rf /home/bof$i
-        sudo rm -rf _bof$i.c
+        rm -rf _bof$i.c
     done
 }
 
@@ -41,28 +43,41 @@ main(){
         cleanup
         ;;
     *)
-        # compile
-        # create users
+        #
+        # Create users
+        #
         for ((i=1; i<=$FINAL_STAGE; i++)); do
             sudo useradd -m -d /home/bof$i -s $(which bash) bof$i
+            # Assign uid of created user to the source code
+            if [[ $i == "2" ]]; then
+                _UID=$(cat /etc/passwd | grep "bof$i:" | cut -d ':' -f3)
+                sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
+            fi
         done
-        for ((i=2; i<=$FINAL_STAGE; i++)); do
-            _UID=$(cat /etc/passwd | grep "bof$i:" | cut -d ':' -f3)
-            sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
-        done
+        #
+        # Compile
+        #
         make
+        #
+        # Create flag files (which contain password for next stage)
+        #
+        cat "PASSWORD LIST of ALL bof USERs" > passwords
         for ((i=1; i<=$FINAL_STAGE; i++)); do
             if [[ $i == "1" ]]; then
-                PASSWORD="bof1"
+                # The password of first level is "bof1"
+                PASSWORD=$FIRST_PASSWORD
             else
+                # create random password (The flag is password file.)
                 PASSWORD=$(cat /dev/urandom | hexdump -n 4 -e '"%02x"')
-                PW_FILE="bof$i.password"
+                PW_FILE="bof$i.pw"
                 echo $PASSWORD > $PW_FILE
                 sudo mv $PW_FILE /home/bof$((i - 1))
                 FLAG=/home/bof$((i - 1))/$PW_FILE
                 sudo chown root:bof$i $FLAG
                 sudo chmod 440 $FLAG
             fi
+            echo "bof$i $PASSWORD" >> passwords
+            # setting CTFs(adding user, copying files, setting authority)
             setting_ctf $i $PASSWORD
         done
     ;;

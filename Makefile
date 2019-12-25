@@ -1,33 +1,3 @@
-#SOURCES := $(wildcard *.c)
-#BINARIES := $(SOURCES:%.c=%)
-
-#all: $(BINARIES) 
-
-#bof1:
-     #gcc -fno-stack-protector $@.c -o $@
-#bof2:
-     #gcc -fno-stack-protector $@.c -o $@
-#bof3:
-     #gcc -fno-stack-protector $@.c -o $@
-#bof4:
-     #gcc -fno-stack-protector $@.c -o $@
-#bof5:
-     #gcc -fno-stack-protector $@.c -o $@
-#bof6:
-     #gcc -z execstack -fno-stack-protector $@.c -o $@
-#bof7:
-     #gcc -z execstack -fno-stack-protector $@.c -o $@
-#bof8:
-     #gcc -z execstack -fno-stack-protector $@.c -o $@
-#bof9:
-     #gcc -fno-stack-protector $@.c -o $@
-#bof10:
-     #sudo apt-get install gcc-multilib
-	#gcc -m32 -z execstack -fno-stack-protector $@.c -o $@
-#bof11:
-	#gcc -fno-stack-protector $@.c -o $@ -ldl
-#clean:
-	#rm -f $(BINARIES) *.o a.out hello *.hex *.txt
 SOURCES := $(wildcard *.c)
 BINARIES := $(SOURCES:%.c=%)
 
