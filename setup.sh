@@ -2,6 +2,7 @@
 
 FINAL_STAGE=12
 FIRST_PASSWORD="bof1"
+PASSWORDS_FILE="PASSWORDS"
 
 setting_ctf() {
     USER="bof$1"
@@ -29,7 +30,7 @@ exit" | sudo tee /home/$USER/.bashrc
 
 cleanup(){
     make clean
-    rm passwords
+    rm $PASSWORDS_FILE
     for ((i=1; i<=$FINAL_STAGE; i++)); do
         sudo userdel bof$i
         sudo rm -rf /home/bof$i
@@ -49,7 +50,7 @@ main(){
         for ((i=1; i<=$FINAL_STAGE; i++)); do
             sudo useradd -m -d /home/bof$i -s $(which bash) bof$i
             # Assign uid of created user to the source code
-            if [[ $i == "2" ]]; then
+            if [[ $i != "1" ]]; then
                 _UID=$(cat /etc/passwd | grep "bof$i:" | cut -d ':' -f3)
                 sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
             fi
@@ -61,7 +62,7 @@ main(){
         #
         # Create flag files (which contain password for next stage)
         #
-        cat "PASSWORD LIST of ALL bof USERs" > passwords
+        echo "PASSWORD LIST of ALL bof USERs" > $PASSWORDS_FILE
         for ((i=1; i<=$FINAL_STAGE; i++)); do
             if [[ $i == "1" ]]; then
                 # The password of first level is "bof1"
@@ -76,7 +77,7 @@ main(){
                 sudo chown root:bof$i $FLAG
                 sudo chmod 440 $FLAG
             fi
-            echo "bof$i $PASSWORD" >> passwords
+            echo -e "bof$i\t$PASSWORD" >> $PASSWORDS_FILE
             # setting CTFs(adding user, copying files, setting authority)
             setting_ctf $i $PASSWORD
         done
