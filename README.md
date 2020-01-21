@@ -2,13 +2,21 @@
 
 ## Setup BOF CTF
 
+Execute the following commands for setting bof CTF environment.
+
 ```shell
 git clone https://github.com/ccss17/bof
 cd bof
 ./setup.sh
 ```
 
-Then, check created bof users and their passwords
+To uninstall bof CTF environment, run `setup.sh` again with `--remove` option.
+
+```shell
+./setup.sh --remove
+```
+
+Check created bof users and their passwords
 
 ```shell
 tail -n12 /etc/passwd
