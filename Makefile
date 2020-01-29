@@ -21,7 +21,6 @@ _bof8:
 _bof9:
 	gcc -fno-stack-protector $@.c -o $@
 _bof10:
-	sudo apt-get install gcc-multilib
 	gcc -m32 -z execstack -fno-stack-protector $@.c -o $@
 _bof11:
 	gcc -fno-stack-protector $@.c -o $@ -ldl
