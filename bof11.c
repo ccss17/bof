@@ -1,9 +1,7 @@
 // AFTER => bof10.c
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <dlfcn.h>
 #define BUF_SIZE 8
 
 // ASLR ON
@@ -13,8 +11,7 @@
 
 void vuln(void) {
     char buf[BUF_SIZE];
-    void (*printf_addr)() = dlsym(RTLD_NEXT, "printf");
-    printf("printf() address : %p\n",printf_addr);
+    printf("printf() address : %p\n", printf);
 
     if (setreuid(UID_BOF12, UID_BOF12)) {
         perror("setuid");
@@ -24,7 +21,8 @@ void vuln(void) {
         perror("setgid");
         exit(1);
     }
-    gets(buf);
+    unsigned short mistake = -128;
+    fgets(buf, mistake, stdin);
     printf("Hello %s!\n", buf);
 }
 

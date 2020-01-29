@@ -51,6 +51,47 @@ cleanup(){
     done
 }
 
+compile() {
+    distro=$(cat /etc/os-release | grep "^ID=" | cut -d\= -f2 | sed -e 's/"//g')
+    case "$distro" in
+    "ubuntu")
+        sudo apt-get -y install gcc-multilib
+        ;;
+    "arch")
+        LIB32="lib32-gcc-libs"
+        if ! pacman -Qi $LIB32>/dev/null; then
+            sudo pacman -S --noconfirm $LIB32
+        fi
+        ;;
+    esac
+    if ! make; then
+        echo "compile fail"
+        exit 1
+    fi
+}
+
+setup_ctf() {
+    echo "PASSWORD LIST of ALL bof USERs" > $PASSWORDS_FILE
+    for ((i=1; i<=$FINAL_STAGE; i++)); do
+        if [[ $i == "1" ]]; then
+            # The password of first level is "bof1"
+            PASSWORD=$FIRST_PASSWORD
+        else
+            # create random password (The flag is password file.)
+            PASSWORD=$(cat /dev/urandom | hexdump -n 2 -e '"%02x"')
+            PW_FILE="bof$i.pw"
+            echo $PASSWORD > $PW_FILE
+            sudo mv $PW_FILE /home/bof$((i - 1))
+            FLAG=/home/bof$((i - 1))/$PW_FILE
+            sudo chown root:bof$i $FLAG
+            sudo chmod 440 $FLAG
+        fi
+        echo -e "bof$i\t$PASSWORD" >> $PASSWORDS_FILE
+        # setting CTFs(adding user, copying files, setting authority)
+        setting_ctf $i $PASSWORD
+    done
+}
+
 main(){
     case "$1" in
     --remove)
@@ -71,44 +112,11 @@ main(){
         #
         # Compile
         #
-        distro=$(cat /etc/os-release | grep "^ID=" | cut -d\= -f2 | sed -e 's/"//g')
-        case "$distro" in
-        "ubuntu")
-            sudo apt-get -y install gcc-multilib
-            ;;
-        "arch")
-            LIB32="lib32-gcc-libs"
-            if ! pacman -Qi $LIB32>/dev/null; then
-                sudo pacman -S --noconfirm $LIB32
-            fi
-            ;;
-        esac
-        if ! make; then
-            echo "make fail"
-            exit 1
-        fi
+        compile
         #
         # Create flag files (which contain password for next stage)
         #
-        echo "PASSWORD LIST of ALL bof USERs" > $PASSWORDS_FILE
-        for ((i=1; i<=$FINAL_STAGE; i++)); do
-            if [[ $i == "1" ]]; then
-                # The password of first level is "bof1"
-                PASSWORD=$FIRST_PASSWORD
-            else
-                # create random password (The flag is password file.)
-                PASSWORD=$(cat /dev/urandom | hexdump -n 2 -e '"%02x"')
-                PW_FILE="bof$i.pw"
-                echo $PASSWORD > $PW_FILE
-                sudo mv $PW_FILE /home/bof$((i - 1))
-                FLAG=/home/bof$((i - 1))/$PW_FILE
-                sudo chown root:bof$i $FLAG
-                sudo chmod 440 $FLAG
-            fi
-            echo -e "bof$i\t$PASSWORD" >> $PASSWORDS_FILE
-            # setting CTFs(adding user, copying files, setting authority)
-            setting_ctf $i $PASSWORD
-        done
+        setup_ctf
     ;;
     esac
 }
