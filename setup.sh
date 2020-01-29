@@ -68,7 +68,10 @@ main(){
             sudo apt-get -y install gcc-multilib
             ;;
         "arch")
-            sudo pacman -S --noconfirm lib32-gcc-libs
+            LIB32="lib32-gcc-libs"
+            if ! pacman -Qi $LIB32>/dev/null; then
+                sudo pacman -S --noconfirm $LIB32
+            fi
             ;;
         esac
         if ! make; then
