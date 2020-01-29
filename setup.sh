@@ -62,7 +62,10 @@ main(){
         #
         # Compile
         #
-        make
+        if ! make; then
+            echo "make fail"
+            exit 1
+        fi
         #
         # Create flag files (which contain password for next stage)
         #
