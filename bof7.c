@@ -21,11 +21,11 @@ void vuln(char * arg){
 
     if (setreuid(UID_BOF8, UID_BOF8)) {
         perror("setuid");
-        return 1;
+        exit(1);
     }
     if (setregid(UID_BOF8, UID_BOF8)) {
         perror("setgid");
-        return 1;
+        exit(1);
     }
 
     strcpy(buf, arg);

@@ -45,11 +45,11 @@ void vuln(void) {
 
     if (setreuid(UID_BOF10, UID_BOF10)) {
         perror("setuid");
-        return 1;
+        exit(1);
     }
     if (setregid(UID_BOF10, UID_BOF10)) {
         perror("setgid");
-        return 1;
+        exit(1);
     }
     gets(buf);
     printf("Hello %s!\n", buf);

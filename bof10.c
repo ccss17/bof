@@ -16,11 +16,11 @@ void vuln(char * arg) {
 
     if (setreuid(UID_BOF11, UID_BOF11)) {
         perror("setuid");
-        return 1;
+        exit(1);
     }
     if (setregid(UID_BOF11, UID_BOF11)) {
         perror("setgid");
-        return 1;
+        exit(1);
     }
     strcpy(buf, arg);
     printf("Hello %s[%p]!\n", buf, buf);

@@ -23,11 +23,11 @@ void vuln(char * arg) {
     if (innocent == KEY) {
         if (setreuid(UID_BOF5, UID_BOF5)) {
             perror("setuid");
-            return 1;
+            exit(1);
         }
         if (setregid(UID_BOF5, UID_BOF5)) {
             perror("setgid");
-            return 1;
+            exit(1);
         }
         system("/bin/sh");
     }

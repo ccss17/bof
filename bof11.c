@@ -1,6 +1,7 @@
 // AFTER => bof10.c
 #define _GNU_SOURCE
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <dlfcn.h>
 #define BUF_SIZE 8
@@ -17,11 +18,11 @@ void vuln(void) {
 
     if (setreuid(UID_BOF12, UID_BOF12)) {
         perror("setuid");
-        return 1;
+        exit(1);
     }
     if (setregid(UID_BOF12, UID_BOF12)) {
         perror("setgid");
-        return 1;
+        exit(1);
     }
     gets(buf);
     printf("Hello %s!\n", buf);

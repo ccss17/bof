@@ -22,11 +22,11 @@ void vuln() {
 
     if (setreuid(UID_BOF7, UID_BOF7)) {
         perror("setuid");
-        return 1;
+        exit(1);
     }
     if (setregid(UID_BOF7, UID_BOF7)) {
         perror("setgid");
-        return 1;
+        exit(1);
     }
 }
 
