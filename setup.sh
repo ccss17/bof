@@ -62,6 +62,15 @@ main(){
         #
         # Compile
         #
+        distro=$(cat /etc/os-release | grep "^ID=" | cut -d\= -f2 | sed -e 's/"//g')
+        case "$distro" in
+        "ubuntu")
+            sudo apt-get -y install gcc-multilib
+            ;;
+        "arch")
+            sudo pacman -S --noconfirm lib32-gcc-libs
+            ;;
+        esac
         if ! make; then
             echo "make fail"
             exit 1
@@ -76,7 +85,7 @@ main(){
                 PASSWORD=$FIRST_PASSWORD
             else
                 # create random password (The flag is password file.)
-                PASSWORD=$(cat /dev/urandom | hexdump -n 4 -e '"%02x"')
+                PASSWORD=$(cat /dev/urandom | hexdump -n 2 -e '"%02x"')
                 PW_FILE="bof$i.pw"
                 echo $PASSWORD > $PW_FILE
                 sudo mv $PW_FILE /home/bof$((i - 1))
