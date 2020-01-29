@@ -20,6 +20,8 @@ setting_ctf() {
         sudo chmod 644 $SRC
         sudo cp ~/.gdbinit /home/$USER/
         sudo chown $USER:$USER /home/$USER/.gdbinit
+        sudo cp ~/.tmux.conf /home/$USER/
+        sudo chown $USER:$USER /home/$USER/.tmux.conf
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
             sudo cp $POC /home/$USER
