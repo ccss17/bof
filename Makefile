@@ -23,10 +23,11 @@ _bof9: _bof9.c
 _bof10: _bof10.c
 	gcc -m32 -z execstack -fno-stack-protector $@.c -o $@
 _bof11: _bof11.c older-glibc 
-	cp $< older-glibc 
-	cd older-glibc
+	mv older-glibc/2.23 .
+	mv older-glibc/compile_older_glibc.sh .
 	./compile_older_glibc.sh 2.23 $< $@
 older-glibc:
 	git clone https://github.com/ccss17/older-glibc
 clean:
-	rm -f $(BINARIES) *.o a.out hello *.hex *.txt
+	rm -f $(BINARIES) 
+	rm -rf older-glibc 2.23 compile_older_glibc.sh
