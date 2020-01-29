@@ -18,6 +18,11 @@ setting_ctf() {
         sudo chmod 6555 $BIN
         sudo chown root:root $SRC
         sudo chmod 644 $SRC
+        if [[ $1 == 11 ]]; then
+            POC="exp_bof11.py"
+            sudo cp $POC /home/$USER
+            sudo chown $USER:$USER /home/$USER/$POC
+        fi
     else
         echo "R=\"\e[1;31m\"
 C=\"\e[1;36m\"
