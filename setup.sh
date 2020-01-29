@@ -62,6 +62,14 @@ main(){
         #
         # Compile
         #
+        distro=$(cat /etc/os-release | grep "^ID=" | cut -d\= -f2 | sed -e 's/"//g')
+        case "$distro" in
+        "ubuntu")
+            sudo apt-get install gcc-multilib
+            ;;
+        "arch")
+            ;;
+        esac
         make
         #
         # Create flag files (which contain password for next stage)
