@@ -25,8 +25,11 @@ setting_ctf() {
         sudo chown $USER:$USER /home/$USER/.tmux.conf
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
+            LIBC="libc.so.6"
             sudo cp $POC /home/$USER
             sudo chown $USER:$USER /home/$USER/$POC
+            sudo cp 2.23/lib/$LIBC /home/$USER
+            sudo chown $USER:$USER /home/$USER/$LIBC
         fi
     else
         echo "R=\"\e[1;31m\"
