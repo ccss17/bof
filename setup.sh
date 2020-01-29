@@ -19,6 +19,7 @@ setting_ctf() {
         sudo chown root:root $SRC
         sudo chmod 644 $SRC
         sudo cp ~/.gdbinit /home/$USER/
+        sudo chown $USER:$USER /home/$USER/.gdbinit
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
             sudo cp $POC /home/$USER
