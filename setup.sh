@@ -19,6 +19,7 @@ setting_ctf() {
         sudo chown root:root $SRC
         sudo chmod 644 $SRC
         sudo cp ~/.gdbinit /home/$USER/
+        sudo sed -i 's@source ~@source '"$HOME"'@g' /home/$USER/.gdbinit
         sudo chown $USER:$USER /home/$USER/.gdbinit
         sudo cp ~/.tmux.conf /home/$USER/
         sudo chown $USER:$USER /home/$USER/.tmux.conf
