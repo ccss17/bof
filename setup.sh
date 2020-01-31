@@ -29,9 +29,9 @@ setting_ctf() {
         $SUDO cp ~/.tmux.conf /home/$USER/
         $SUDO chown $USER:$USER /home/$USER/.tmux.conf
         if [[ $1 < 10 ]]; then
-            echo "/home/$HOME/.aslr 0" | $SUDO tee /home/$USER/.bashrc
+            echo "$HOME/.aslr 0" | $SUDO tee /home/$USER/.bashrc
         else
-            echo "/home/$HOME/.aslr 2" | $SUDO tee /home/$USER/.bashrc
+            echo "$HOME/.aslr 2" | $SUDO tee /home/$USER/.bashrc
         fi
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
