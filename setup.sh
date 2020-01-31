@@ -87,7 +87,7 @@ setup_ctf() {
             PASSWORD=$FIRST_PASSWORD
         else
             # create random password (The flag is password file.)
-            PASSWORD=$(cat /dev/urandom | hexdump -n 2 -e '"%02x"')
+            PASSWORD=$(cat /dev/urandom | xxd -l 4 -p)
             PW_FILE="bof$i.pw"
             echo $PASSWORD > $PW_FILE
             $SUDO mv $PW_FILE /home/bof$((i - 1))
