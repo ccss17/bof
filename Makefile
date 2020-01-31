@@ -26,7 +26,7 @@ _bof9: _bof9.c
 _bof10: _bof10.c
 	$(CC) -m32 -z execstack -fno-stack-protector $< -o $@
 _bof11: _bof11.c older-glibc 
-	cp older-glibc/2.23 . -r
+	make -C older-glibc
 	cp older-glibc/compile_older_glibc.sh .
 	./compile_older_glibc.sh 2.23 $< $@ -fno-stack-protector
 older-glibc:
