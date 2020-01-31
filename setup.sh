@@ -28,9 +28,9 @@ setting_ctf() {
         $SUDO chown $USER:$USER /home/$USER/.gdbinit
         $SUDO cp ~/.tmux.conf /home/$USER/
         $SUDO chown $USER:$USER /home/$USER/.tmux.conf
-        $SUDO cp aslr $HOME/.aslr
-        $SUDO chown root:root aslr
-        $SUDO chmod 4775 aslr
+        $SUDO cp aslr /home/$USER/.aslr
+        $SUDO chown root:root /home/$USER/.aslr
+        $SUDO chmod 4775 /home/$USER/.aslr
         if [[ $1 < 10 ]]; then
             echo "/home/$USER/.aslr 0" | $SUDO tee /home/$USER/.bashrc
         else
