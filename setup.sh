@@ -28,6 +28,11 @@ setting_ctf() {
         $SUDO chown $USER:$USER /home/$USER/.gdbinit
         $SUDO cp ~/.tmux.conf /home/$USER/
         $SUDO chown $USER:$USER /home/$USER/.tmux.conf
+        if [[ $1 < 10 ]]; then
+            echo "/home/$HOME/.aslr 0" | $SUDO tee /home/$USER/.bashrc
+        else
+            echo "/home/$HOME/.aslr 2" | $SUDO tee /home/$USER/.bashrc
+        fi
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
             LIBC="libc.so.6"
@@ -77,6 +82,9 @@ compile() {
         echo "compile fail"
         exit 1
     fi
+    $SUDO chown root:root aslr
+    $SUDO chmod 4775 aslr
+    $SUDO mv aslr $HOME/.aslr
 }
 
 setup_ctf() {
