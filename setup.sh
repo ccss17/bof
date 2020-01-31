@@ -28,13 +28,13 @@ setting_ctf() {
         $SUDO chown $USER:$USER /home/$USER/.gdbinit
         $SUDO cp ~/.tmux.conf /home/$USER/
         $SUDO chown $USER:$USER /home/$USER/.tmux.conf
-        $SUDO cp aslr $HOME/.aslr
-        $SUDO chown root:root aslr
-        $SUDO chmod 4775 aslr
-        if [[ $1 < 10 ]]; then
-            echo "/home/$USER/.aslr 0" | $SUDO tee /home/$USER/.bashrc
+        $SUDO cp aslr /home/$USER/.aslr
+        $SUDO chown root:root /home/$USER/.aslr
+        $SUDO chmod 4775 /home/$USER/.aslr
+        if [[ $1 -lt "10" ]]; then
+            echo "/home/$USER/.aslr 0 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         else
-            echo "/home/$USER/.aslr 2" | $SUDO tee /home/$USER/.bashrc
+            echo "/home/$USER/.aslr 2 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         fi
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
