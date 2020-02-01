@@ -26,7 +26,7 @@ setting_ctf() {
         if [[ ! -f /tmp/gdbinit-gef.py ]]; then
             wget -O /tmp/gdbinit-gef.py -q https://github.com/hugsy/gef/raw/master/gef.py
         fi
-        $SUDO echo source ~/.gdbinit-gef.py > /home/$USER/.gdbinit
+        $SUDO echo "source /tmp/gdbinit-gef.py" > /home/$USER/.gdbinit
         $SUDO chown $USER:$USER /home/$USER/.gdbinit
         if [[ -f ~/.tmux.conf ]]; then
             $SUDO cp ~/.tmux.conf /home/$USER/
