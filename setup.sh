@@ -23,11 +23,11 @@ setting_ctf() {
         $SUDO chmod 6555 $BIN
         $SUDO chown root:root $SRC
         $SUDO chmod 644 $SRC
-        if [[ -f ~/.gdbinit ]]; then
-            $SUDO cp ~/.gdbinit /home/$USER/
-            $SUDO sed -i 's@source ~@source '"$HOME"'@g' /home/$USER/.gdbinit
-            $SUDO chown $USER:$USER /home/$USER/.gdbinit
+        if [[ ! -f /tmp/gdbinit-gef.py ]]; then
+            wget -O /tmp/gdbinit-gef.py -q https://github.com/hugsy/gef/raw/master/gef.py
         fi
+        $SUDO echo source ~/.gdbinit-gef.py > /home/$USER/.gdbinit
+        $SUDO chown $USER:$USER /home/$USER/.gdbinit
         if [[ -f ~/.tmux.conf ]]; then
             $SUDO cp ~/.tmux.conf /home/$USER/
             $SUDO chown $USER:$USER /home/$USER/.tmux.conf
