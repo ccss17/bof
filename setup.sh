@@ -40,6 +40,7 @@ setting_ctf() {
         else
             echo "/home/$USER/.aslr 2 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         fi
+        $SUDO echo "export LANG=en_US.UTF-8" >> /home/$USER/.bashrc
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
             LIBC="libc.so.6"
