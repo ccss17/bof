@@ -31,10 +31,10 @@ setting_ctf() {
         $SUDO cp aslr /home/$USER/.aslr
         $SUDO chown root:root /home/$USER/.aslr
         $SUDO chmod 4775 /home/$USER/.aslr
-        if [[ $1 < 10 ]]; then
-            echo "/home/$USER/.aslr 0" | $SUDO tee /home/$USER/.bashrc
+        if [[ $1 -lt "10" ]]; then
+            echo "/home/$USER/.aslr 0 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         else
-            echo "/home/$USER/.aslr 2" | $SUDO tee /home/$USER/.bashrc
+            echo "/home/$USER/.aslr 2 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         fi
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
