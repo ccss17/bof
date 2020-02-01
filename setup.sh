@@ -73,7 +73,7 @@ compile() {
     distro=$(cat /etc/os-release | grep "^ID=" | cut -d\= -f2 | sed -e 's/"//g')
     case "$distro" in
     "ubuntu")
-        $SUDO apt-get -y install gcc-multilib
+        $SUDO apt-get -y -qq install gcc-multilib
         ;;
     "arch")
         LIB32="lib32-gcc-libs"
