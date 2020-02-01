@@ -39,9 +39,10 @@ setting_ctf() {
         if [[ $1 == 11 ]]; then
             POC="exp_bof11.py"
             LIBC="libc.so.6"
+            BASE="/tmp"
             $SUDO cp $POC /home/$USER
             $SUDO chown $USER:$USER /home/$USER/$POC
-            $SUDO cp 2.23/lib/$LIBC /home/$USER
+            $SUDO cp $BASE/2.23/lib/$LIBC /home/$USER
             $SUDO chown $USER:$USER /home/$USER/$LIBC
         fi
     else

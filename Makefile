@@ -27,8 +27,7 @@ _bof10: _bof10.c
 	$(CC) -m32 -z execstack -fno-stack-protector $< -o $@
 _bof11: _bof11.c older-glibc 
 	make -C older-glibc
-	cp older-glibc/compile_older_glibc.sh .
-	./compile_older_glibc.sh 2.23 $< $@ -fno-stack-protector
+	older-gblic/compile_older_glibc.sh 2.23 $< $@ -fno-stack-protector
 older-glibc:
 	git clone https://github.com/ccss17/older-glibc
 clean:
