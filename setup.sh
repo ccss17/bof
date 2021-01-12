@@ -19,6 +19,7 @@ setting_ctf() {
         SRC="/home/$USER/$USER.c"
         $SUDO cp _$USER /home/$USER/$USER
         $SUDO cp _$USER.c /home/$USER/$USER.c
+        $SUDO cp $USER.hint /home/$USER/$USER.hint
         $SUDO chown $PWN:$PWN $BIN
         $SUDO chmod 6555 $BIN
         $SUDO chown root:root $SRC

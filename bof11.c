@@ -7,7 +7,6 @@
 // ASLR ON
 // STACK-PROTECTOR OFF
 // STACK-EXECUTION OFF
-// EXPLOIT --> exp_bof11.py
 
 void vuln(void) {
     char buf[BUF_SIZE] = {'\0'};
