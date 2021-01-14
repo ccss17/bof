@@ -36,4 +36,4 @@ RUN cd ~ \
     && ./setup.sh \
     && rm -rf ~/bof
 
-CMD su
+CMD login
