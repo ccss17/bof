@@ -13,11 +13,11 @@ void vuln(void) {
     memset(buf, 0, sizeof(buf));
     printf("printf() address : %p\n", printf);
 
-    if (setreuid(UID_BOF12, UID_BOF12)) {
+    if (setreuid(UID_BOF13, UID_BOF13)) {
         perror("setuid");
         exit(1);
     }
-    if (setregid(UID_BOF12, UID_BOF12)) {
+    if (setregid(UID_BOF13, UID_BOF13)) {
         perror("setgid");
         exit(1);
     }

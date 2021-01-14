@@ -12,11 +12,11 @@
 void vuln(char * arg) {
     char buf[BUF_SIZE];
 
-    if (setreuid(UID_BOF11, UID_BOF11)) {
+    if (setreuid(UID_BOF12, UID_BOF12)) {
         perror("setuid");
         exit(1);
     }
-    if (setregid(UID_BOF11, UID_BOF11)) {
+    if (setregid(UID_BOF12, UID_BOF12)) {
         perror("setgid");
         exit(1);
     }
