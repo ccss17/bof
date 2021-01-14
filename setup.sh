@@ -134,7 +134,7 @@ main(){
                 if [[ $i != "10" ]]; then
                     sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
                 else
-                    mov bof$((i - 1)).c _bof$((i - 1)).c
+                    mv bof$((i - 1)).c _bof$((i - 1)).c
                 fi
             fi
         done
