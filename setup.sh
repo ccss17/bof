@@ -43,14 +43,10 @@ setting_ctf() {
             echo "/home/$USER/.aslr 2 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         fi
         $SUDO echo "export LANG=en_US.UTF-8" >> /home/$USER/.bashrc
-        if [[ $1 == 12 ]]; then
-            POC="exp_bof11.py"
-            LIBC="libc.so.6"
-            BASE="/tmp"
+        if [ $1 = 10 ] || [$1 = 12]; then
+            POC="exp_bof$USER.py"
             $SUDO cp $POC /home/$USER
             $SUDO chown $USER:$USER /home/$USER/$POC
-            $SUDO cp $BASE/2.23/lib/$LIBC /home/$USER
-            $SUDO chown $USER:$USER /home/$USER/$LIBC
         fi
     else
         echo "R=\"\e[1;31m\"

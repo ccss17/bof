@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from pwn import *
   
-p = process('./bof11')
+p = process('./bof12')
   
 p.recvuntil('printf() address : ')
 printf_addr = p.recvuntil('\n')
