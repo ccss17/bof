@@ -1,6 +1,7 @@
 #!/bin/bash
 
-FINAL_STAGE=12
+FINAL_STAGE=13
+ASLR_ON="11"
 FIRST_PASSWORD="bof1"
 PASSWORDS_FILE="PASSWORDS"
 if [[ $UID == 0 ]]; then
@@ -36,13 +37,13 @@ setting_ctf() {
         $SUDO cp aslr /home/$USER/.aslr
         $SUDO chown root:root /home/$USER/.aslr
         $SUDO chmod 4775 /home/$USER/.aslr
-        if [[ $1 -lt "10" ]]; then
+        if [[ $1 -lt ASLR_ON ]]; then
             echo "/home/$USER/.aslr 0 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         else
             echo "/home/$USER/.aslr 2 2>&1 > /dev/null" | $SUDO tee /home/$USER/.bashrc
         fi
         $SUDO echo "export LANG=en_US.UTF-8" >> /home/$USER/.bashrc
-        if [[ $1 == 11 ]]; then
+        if [[ $1 == 12 ]]; then
             POC="exp_bof11.py"
             LIBC="libc.so.6"
             BASE="/tmp"
@@ -130,7 +131,11 @@ main(){
             # Assign uid of created user to the source code
             if [[ $i != "1" ]]; then
                 _UID=$(cat /etc/passwd | grep "bof$i:" | cut -d ':' -f3)
-                sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
+                if [[ $i != "10" ]]; then
+                    sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
+                else
+                    mov bof$((i - 1)).c _bof$((i - 1)).c
+                fi
             fi
         done
         #

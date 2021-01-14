@@ -25,10 +25,11 @@ _bof9: _bof9.c older-glibc
 	make -C older-glibc
 	cp older-glibc/compile_older_glibc.sh .
 	./compile_older_glibc.sh 2.23 $< $@ -fno-stack-protector
-	#$(CC) -fno-stack-protector $< -o $@
 _bof10: _bof10.c
-	$(CC) -m32 -z execstack -fno-stack-protector $< -o $@
+	./compile_older_glibc.sh 2.23 $< $@ -fno-stack-protector
 _bof11: _bof11.c 
+	$(CC) -m32 -z execstack -fno-stack-protector $< -o $@
+_bof12: _bof11.c 
 	./compile_older_glibc.sh 2.23 $< $@ -fno-stack-protector
 older-glibc:
 	git clone https://github.com/ccss17/older-glibc

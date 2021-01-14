@@ -1,32 +1,32 @@
-// AFTER => bof10.c
+// AFTER => bof9.c
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #define BUF_SIZE 8
 
 // ASLR ON
 // STACK-PROTECTOR OFF
-// STACK-EXECUTION OFF
+// STACK-EXECUTION ON
 
-void vuln(void) {
-    char buf[BUF_SIZE] = {'\0'};
-    memset(buf, 0, sizeof(buf));
-    printf("printf() address : %p\n", printf);
+void vuln(char * arg) {
+    char buf[BUF_SIZE];
 
-    if (setreuid(UID_BOF12, UID_BOF12)) {
+    if (setreuid(UID_BOF11, UID_BOF11)) {
         perror("setuid");
         exit(1);
     }
-    if (setregid(UID_BOF12, UID_BOF12)) {
+    if (setregid(UID_BOF11, UID_BOF11)) {
         perror("setgid");
         exit(1);
     }
-    unsigned short mistake = -128;
-    fgets(buf, mistake, stdin);
-    printf("Hello %s\n", buf);
+    strcpy(buf, arg);
+    printf("Hello %s[%p]!\n", buf, buf);
+    printf("(env:SHELLCODE -> %p)\n", getenv("SHELLCODE"));
 }
 
-int main(void) {
-    vuln();
+int main(int argc, char *argv[]) {
+    vuln(argv[1]);
     return 0;
 }
+
