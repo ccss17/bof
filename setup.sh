@@ -131,7 +131,7 @@ main(){
             # Assign uid of created user to the source code
             if [[ $i != "1" ]]; then
                 _UID=$(cat /etc/passwd | grep "bof$i:" | cut -d ':' -f3)
-                if [[ $i != "10" ]]; then
+                if [[ $i != "11" ]]; then
                     sed 's/UID_BOF'$i'/'$_UID'/g' bof$((i - 1)).c > _bof$((i - 1)).c
                 else
                     mv bof$((i - 1)).c _bof$((i - 1)).c
