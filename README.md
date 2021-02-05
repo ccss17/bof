@@ -1,3 +1,4 @@
+### 이 레포지토리는 관리되지 않습니다. 이제 https://github.com/Global-Handong-Oriented-Security-Team/bof 에서 관리됩니다.
 # bof (ctf easy tutorial)
 
 **이 레포지토리는 매우 쉬운 CTF 입문 문제들을 관리합니다. 서버에 설치할 수도 있고, Docker 로 편하게 시작할 수도 있습니다.**
